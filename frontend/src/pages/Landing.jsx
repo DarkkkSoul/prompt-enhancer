@@ -1,10 +1,14 @@
+import Header from '../components/common/Header';
 import Window from '../components/landingpage/Window';
 import '../styles/fonts.css';
+import { useNavigate } from 'react-router-dom'
 
 function Landing() {
+    const navigate = useNavigate();
     return (
         <div className='h-screen w-full flex'>
             <div className="flex-3 flex flex-col justify-center items-center relative overflow-hidden">
+                <Header/>
                 <div className='flex flex-col gap-y-5 -mt-50'>
                     <div className='kant-700 text-6xl text-white flex flex-col'>
                         <div className=''>Get</div>
@@ -18,7 +22,9 @@ function Landing() {
                     </div>
                     <div>
                         <button
-                            className='border-3 border-[#FFFFFF]/40 rounded-xl py-2 px-2.5 kant-400 tracking-wide text-white text-md bg-linear-350 from-[#31746c] via-[#4fa59b] via-60% via-[#31746c] to-[#FFFFFF]/30 to-90% bg-clip-padding'>
+                            className='border-3 border-[#FFFFFF]/40 rounded-xl py-2 px-2.5 kant-400 tracking-wide text-white text-md bg-linear-350 from-[#31746c] via-[#4fa59b] via-60% via-[#31746c] to-[#FFFFFF]/30 to-90% bg-clip-padding cursor-pointer transition-all hover:scale-[1.03]'
+                            onClick={() => navigate('/enhance')}
+                        >
                             Start Prompting</button>
                     </div>
                 </div>
@@ -27,6 +33,7 @@ function Landing() {
                 <Window />
 
             </div>
+
             <div className='flex-2 bg-white'>
 
             </div>
