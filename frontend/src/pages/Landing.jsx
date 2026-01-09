@@ -1,14 +1,30 @@
 import Header from '../components/common/Header';
 import Window from '../components/landingpage/Window';
 import '../styles/fonts.css';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 function Landing() {
     const navigate = useNavigate();
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+        const videoEl = videoRef.current;
+        if (!videoEl) return;
+
+        videoEl.muted = true;
+
+        const playPromise = videoEl.play();
+        if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+                console.error('Video autoplay was prevented:', error);
+            });
+        }
+    }, []);
     return (
         <div className='h-screen w-full flex'>
             <div className="flex-3 flex flex-col justify-center items-center relative overflow-hidden">
-                <Header/>
+                <Header />
                 <div className='flex flex-col gap-y-5 -mt-50'>
                     <div className='kant-700 text-6xl text-white flex flex-col'>
                         <div className=''>Get</div>
@@ -34,8 +50,18 @@ function Landing() {
 
             </div>
 
-            <div className='flex-2 bg-white'>
-
+            <div className='flex-2 bg-white/80 h-full overflow-hidden p-2 flex items-center'>
+                <video
+                    ref={videoRef}
+                    className='rounded-xl'
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload='metadata'
+                >
+                    <source src='/videos/eleva.mp4' type="video/mp4" />
+                </video>
             </div>
         </div>
     )
