@@ -25,7 +25,7 @@ function Landing() {
         <div className='h-screen w-full flex flex-col relative overflow-hidden'>
             <Header />
 
-            <div className="flex flex-row h-full w-full items-center justify-evenly">
+            <div className="flex flex-row h-full w-full items-center justify-evenly -mt-23">
 
                 <div className='flex flex-col gap-y-7'>
                     <div className='kant-700 text-6xl text-white flex flex-col'>
@@ -61,12 +61,9 @@ function Landing() {
 
             </div>
 
-            <div className='absolute left-1/2 -translate-x-1/2 bottom-0 p-4 flex items-center'>
-
-                {/* <div className='bg-[#00EEFF]/60 top-[60%] h-[100vh] w-[100vh] rounded-full blur-[120px] pointer-events-none'></div> */}
-                <div>
-                    <Window />
-                </div>
+            <div className='absolute left-1/2 -translate-x-1/2 bottom-0'>
+            <div className='bg-[#00EEFF]/60 left-1/2 -translate-x-1/2 -top-13 h-screen w-[106vh] blur-[120px] rounded-full pointer-events-none absolute z-0'></div>
+                <Window />
             </div>
         </div>
     )

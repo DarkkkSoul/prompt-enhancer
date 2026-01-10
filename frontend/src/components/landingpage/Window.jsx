@@ -4,7 +4,9 @@ import { features } from '../../arrays/features'
 function Window() {
   return (
 
-    <div className="bg-[#3f7992]/85 absolute bottom-0 left-28 right-28 h-[32vh] border-8 border-b-0 rounded-2xl rounded-b-none border-[#FFFFFF]/40 flex flex-col overflow-hidden gap-y-2 px-3 pt-3 z-10">
+    <div className="bg-[#3f7992]/85 left-1/2 -translate-x-1/2 relative bottom-0 h-[32vh] border-8 border-b-0 rounded-2xl rounded-b-none border-[#FFFFFF]/40 flex flex-col overflow-hidden gap-y-2 px-3 pt-3 z-10">
+
+      
 
       <div className='flex gap-1'>
         <div className='w-3 h-3 bg-red-500 rounded-full'></div>
