@@ -50,7 +50,7 @@ function Landing() {
 
             </div>
 
-            <div className='flex-2 bg-white/80 h-full overflow-hidden p-2 flex items-center'>
+            <div className='flex-2 bg-white/80 h-full overflow-hidden p-4 flex items-center'>
                 <video
                     ref={videoRef}
                     className='rounded-xl'
