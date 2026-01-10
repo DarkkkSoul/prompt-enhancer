@@ -22,15 +22,14 @@ function Landing() {
         }
     }, []);
     return (
-        <div className='h-screen w-full flex flex-col relative overflow-hidden'>
+        <div className='min-h-screen w-full flex flex-col relative overflow-hidden pt-20 sm:pt-24 lg:pt-28'>
             <Header />
 
-            <div className="flex flex-row h-full w-full items-center justify-evenly -mt-23">
-
+            <div className="flex flex-col lg:flex-row h-full w-full items-center justify-evenly gap-y-10 lg:gap-y-0 px-6 lg:px-0">
                 <div className='flex flex-col gap-y-7'>
-                    <div className='kant-700 text-6xl text-white flex flex-col'>
+                    <div className='kant-700 text-4xl sm:text-5xl lg:text-6xl text-white flex flex-col'>
                         <div className=''>Get</div>
-                        <div><span className='kant-700 text-6xl text-[#344F51] drop-shadow-lg drop-shadow-[#a3ca2e]'>10x</span> Output</div>
+                        <div><span className='kant-700 text-4xl sm:text-5xl lg:text-6xl text-[#344F51] drop-shadow-lg drop-shadow-[#a3ca2e]'>10x</span> Output</div>
                     </div>
                     <div className='hind-500 text-xl text-white max-w-xl flex flex-col gap-y-4'>
                         <div>Write prompts to LLM in the right way to get precise outputs.
@@ -49,7 +48,7 @@ function Landing() {
 
                 <video
                     ref={videoRef}
-                    className='rounded-xl w-180 border-3 border-white/80 shadow-2xl/50'
+                    className='rounded-xl w-full max-w-2xl lg:w-180 border-3 border-white/80 shadow-2xl/50'
                     autoPlay
                     muted
                     loop
@@ -58,11 +57,10 @@ function Landing() {
                 >
                     <source src='/videos/eleva.mp4' type="video/mp4" />
                 </video>
-
             </div>
 
-            <div className='absolute left-1/2 -translate-x-1/2 bottom-0'>
-            <div className='bg-[#00EEFF]/60 left-1/2 -translate-x-1/2 -top-13 h-screen w-[106vh] blur-[120px] rounded-full pointer-events-none absolute z-0'></div>
+            <div className='hidden lg:block absolute left-1/2 -translate-x-1/2 bottom-0'>
+                <div className='bg-[#00EEFF]/60 left-1/2 -translate-x-1/2 -top-13 h-screen w-[106vh] blur-[120px] rounded-full pointer-events-none absolute z-0'></div>
                 <Window />
             </div>
         </div>
