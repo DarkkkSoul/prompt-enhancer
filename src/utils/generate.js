@@ -1,6 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
+import Groq from "groq-sdk";
 
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+// Initialize AI clients
+const gemini = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const groq = new Groq({
+    apiKey: import.meta.env.VITE_GROQ_API_KEY,
+    dangerouslyAllowBrowser: true
+});
 
 // Build context from chat history
 function buildContextFromHistory(chatHistory = []) {
@@ -22,10 +28,9 @@ function buildContextFromHistory(chatHistory = []) {
     `;
 }
 
-export async function generateEnhancedPrompt(userPrompt, chatHistory = []) {
-    const contextSection = buildContextFromHistory(chatHistory);
-
-    const modelPrompt = `
+// Build the prompt for AI models
+function buildModelPrompt(userPrompt, contextSection) {
+    return `
     You are an prompt engineer, you take input from the user and enhance their prompt which will in return give better outputs when used.
     User might have input their prompts
     1. in Broken english
@@ -47,37 +52,65 @@ export async function generateEnhancedPrompt(userPrompt, chatHistory = []) {
     2. Give an output data, this data is an object containing key "prompt", the value of this "prompt" should be the combined ENHANCED prompt generated.
     3. Combine all the structure into single prompt, don't explicitly mention the heading, generated prompt should be eligible to be copy and pasted.
   `;
+}
 
-    // open router
-    // const completion = await openRouter.chat.send({
-    //   model: "openrouter/auto",
-    //   messages: [
-    //     {
-    //       role: "user",
-    //       content: modelPrompt,
-    //     },
-    //   ],
-    // });
-    // setPromptGenerated(completion.choices[0].message.content);
+// Primary: Gemini API
+async function generateWithGemini(modelPrompt) {
+    const response = await gemini.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: modelPrompt,
+    });
+    return response.candidates[0]?.content?.parts[0]?.text || "";
+}
 
-    // Gemini
+// Fallback: Groq API
+async function generateWithGroq(modelPrompt) {
+    const response = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+            {
+                role: "user",
+                content: modelPrompt,
+            },
+        ],
+        temperature: 0.7,
+        max_tokens: 2048,
+    });
+    return response.choices[0]?.message?.content || "";
+}
+
+export async function generateEnhancedPrompt(userPrompt, chatHistory = []) {
+    const contextSection = buildContextFromHistory(chatHistory);
+    const modelPrompt = buildModelPrompt(userPrompt, contextSection);
+
+    // Try Gemini first
     try {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: modelPrompt,
-        });
-        const aiResponse = response.candidates[0]?.content?.parts[0]?.text || "";
+        console.log('Trying Gemini API...');
+        const aiResponse = await generateWithGemini(modelPrompt);
         const parsedResponse = parseResponse(aiResponse);
+        console.log('Gemini API success');
         return parsedResponse;
-    } catch (error) {
-        console.log('Gemini API Error:', error);
+    } catch (geminiError) {
+        console.log('Gemini API failed:', geminiError.message);
 
-        if (error.message && error.message.includes('503')) {
-            throw new Error('Gemini is busy right now. Please try again in a moment.');
-        } else if (error.message && error.message.includes('API_KEY')) {
-            throw new Error('Invalid API key. Please check your Gemini API key.');
-        } else {
-            throw new Error('Failed to generate content. Please try again.');
+        // Fallback to Groq
+        try {
+            console.log('Falling back to Groq API...');
+            const aiResponse = await generateWithGroq(modelPrompt);
+            const parsedResponse = parseResponse(aiResponse);
+            console.log('Groq API success');
+            return parsedResponse;
+        } catch (groqError) {
+            console.log('Groq API also failed:', groqError.message);
+
+            // Both failed - throw appropriate error
+            if (geminiError.message?.includes('503') || groqError.message?.includes('503')) {
+                throw new Error('AI services are busy right now. Please try again in a moment.');
+            } else if (geminiError.message?.includes('API_KEY') || groqError.message?.includes('API_KEY')) {
+                throw new Error('Invalid API key. Please check your API keys.');
+            } else {
+                throw new Error('Failed to generate content. Please try again.');
+            }
         }
     }
 }

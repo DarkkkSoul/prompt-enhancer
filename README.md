@@ -3,6 +3,7 @@
   <img src="https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Gemini-AI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" />
+  <img src="https://img.shields.io/badge/Groq-Fallback-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq Fallback" />
 </p>
 
 <h1 align="center">✨ Eleva</h1>
@@ -36,7 +37,7 @@ Eleva is an AI-powered prompt engineering tool that transforms your basic ideas 
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **AI Enhancement** | Transforms basic prompts into detailed, structured prompts using Gemini AI |
+| 🤖 **AI Enhancement** | Transforms basic prompts into detailed, structured prompts using Gemini AI (with Groq fallback) |
 | 💬 **Chat Interface** | Modern chat-based UI with full conversation history |
 | 🧠 **Context Awareness** | AI remembers previous messages for consistent enhancements |
 | 🎤 **Voice Input** | Speech-to-Text support using Web Speech API |
@@ -78,6 +79,7 @@ Eleva is an AI-powered prompt engineering tool that transforms your basic ideas 
 
 - Node.js 18+
 - Gemini API key ([Get one free](https://aistudio.google.com/apikey))
+- Groq API key - optional fallback ([Get one free](https://console.groq.com/keys))
 
 ### Installation
 
@@ -94,8 +96,9 @@ npm install
 # Set up environment
 cp .env.example .env
 
-# Add your Gemini API key to .env
-# VITE_GEMINI_API_KEY=your_key_here
+# Add your API keys to .env
+# VITE_GEMINI_API_KEY=your_gemini_key_here
+# VITE_GROQ_API_KEY=your_groq_key_here (optional fallback)
 
 # Start development server
 npm run dev
@@ -129,7 +132,8 @@ Open [http://localhost:5173](http://localhost:5173) and start enhancing your pro
 </table>
 
 **Additional Libraries:**
-- `@google/genai` - Gemini AI integration
+- `@google/genai` - Gemini AI integration (primary)
+- `groq-sdk` - Groq AI integration (fallback)
 - `react-router-dom` - Client-side routing
 - `react-markdown` - Markdown rendering
 - `lucide-react` - Beautiful icons
@@ -155,7 +159,7 @@ src/
 │   ├── Enhance.jsx             # Main chat page
 │   └── Landing.jsx             # Landing page
 ├── 📂 utils/
-│   └── generate.js             # Gemini AI integration
+│   └── generate.js             # AI integration (Gemini + Groq fallback)
 ├── 📂 arrays/
 │   └── features.js             # Feature list data
 └── 📂 styles/
