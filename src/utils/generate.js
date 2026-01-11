@@ -63,10 +63,10 @@ async function generateWithGemini(modelPrompt) {
     return response.candidates[0]?.content?.parts[0]?.text || "";
 }
 
-// Fallback: Groq API
+// Fallback: Groq API (GPT-OSS 120B - OpenAI's open model)
 async function generateWithGroq(modelPrompt) {
     const response = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         messages: [
             {
                 role: "user",

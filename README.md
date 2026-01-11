@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/Tailwind-4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Gemini-AI-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini AI" />
-  <img src="https://img.shields.io/badge/Groq-Fallback-F55036?style=for-the-badge&logo=groq&logoColor=white" alt="Groq Fallback" />
+  <img src="https://img.shields.io/badge/GPT--OSS_120B-Fallback-10A37F?style=for-the-badge&logo=openai&logoColor=white" alt="GPT-OSS Fallback" />
 </p>
 
 <h1 align="center">✨ Eleva</h1>
@@ -37,7 +37,7 @@ Eleva is an AI-powered prompt engineering tool that transforms your basic ideas 
 
 | Feature | Description |
 |---------|-------------|
-| 🤖 **AI Enhancement** | Transforms basic prompts into detailed, structured prompts using Gemini AI (with Groq fallback) |
+| 🤖 **AI Enhancement** | Transforms basic prompts into detailed, structured prompts using Gemini AI (with GPT-OSS 120B fallback) |
 | 💬 **Chat Interface** | Modern chat-based UI with full conversation history |
 | 🧠 **Context Awareness** | AI remembers previous messages for consistent enhancements |
 | 🎤 **Voice Input** | Speech-to-Text support using Web Speech API |
@@ -133,7 +133,7 @@ Open [http://localhost:5173](http://localhost:5173) and start enhancing your pro
 
 **Additional Libraries:**
 - `@google/genai` - Gemini AI integration (primary)
-- `groq-sdk` - Groq AI integration (fallback)
+- `groq-sdk` - GPT-OSS 120B via Groq (fallback)
 - `react-router-dom` - Client-side routing
 - `react-markdown` - Markdown rendering
 - `lucide-react` - Beautiful icons
@@ -159,7 +159,7 @@ src/
 │   ├── Enhance.jsx             # Main chat page
 │   └── Landing.jsx             # Landing page
 ├── 📂 utils/
-│   └── generate.js             # AI integration (Gemini + Groq fallback)
+│   └── generate.js             # AI integration (Gemini + GPT-OSS 120B fallback)
 ├── 📂 arrays/
 │   └── features.js             # Feature list data
 └── 📂 styles/
